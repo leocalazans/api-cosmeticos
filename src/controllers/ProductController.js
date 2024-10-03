@@ -40,7 +40,6 @@ class ProductController {
       const categories = await this.productService.getAllCategories();
       return reply.send({ categories });
     } catch (error) {
-      console.error('Erro ao buscar categorias:', error);
       return reply.status(500).send({ error: 'Erro ao buscar categorias' });
     }
   }

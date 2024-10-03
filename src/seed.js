@@ -6,7 +6,7 @@ async function seedProducts(db) {
 
   const existingProducts = await productRepository.findAll();
   if (existingProducts.length > 0) {
-    console.log('Produtos já existem no banco de dados.');
+    console.info('Produtos já existem no banco de dados.');
     return;
   }
 
@@ -31,7 +31,7 @@ async function seedProducts(db) {
     await productRepository.addProduct(product);
   }
 
-  console.log('40 produtos de demonstração foram inseridos.');
+  console.info('40 produtos de demonstração foram inseridos.');
 }
 
 module.exports = seedProducts;

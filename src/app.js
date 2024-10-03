@@ -29,8 +29,8 @@ fastify.register(cors, {
   exposedHeaders: ['X-Total-Count'],
   credentials: true,
 });
+module.exports = fastify;
 
-// Registre o plugin Swagger para documentação
 fastify.register(swagger, {
   routePrefix: '/docs',  
   swagger: {
@@ -58,7 +58,6 @@ fastify.register(fastifySwaggerUi, {
 
 fastify.after(() => {
   const db = fastify.mongo.db;
-  console.log(db)
   
   if (!db) {
     fastify.log.error(fastify.mongo);
@@ -85,3 +84,4 @@ const start = async () => {
 };
 
 start();
+

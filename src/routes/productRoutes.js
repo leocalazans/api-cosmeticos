@@ -13,7 +13,6 @@ async function productRoutes(fastify, options) {
 
   fastify.post('/products', productController.addProduct.bind(productController));
   
-  // Função para buscar um produto pelo ID
   const getProductById = async (req, reply) => {
     const productId = req.params.id; // Recupera o ID do produto da URL
     try {
@@ -24,7 +23,6 @@ async function productRoutes(fastify, options) {
         return reply.status(404).send({ message: 'Produto não encontrado' });
       }
     } catch (error) {
-      console.error('Erro ao buscar produto:', error);
       return reply.status(500).send({ message: 'Erro interno do servidor' });
     }
   };
