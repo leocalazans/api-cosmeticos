@@ -60,7 +60,7 @@ Retorna até 40 produtos.
 
 Resposta de Exemplo:
 
-json
+
 
 [
   {
@@ -123,7 +123,7 @@ Estrutura do Projeto
 A estrutura do projeto segue os princípios de Clean Architecture:
 
 
-/src
+/src 
 ├── /controllers      # Controladores que manipulam as requisições
 ├── /services         # Lógica de negócio (camada de aplicação)
 ├── /repositories     # Acesso aos dados (MongoDB)

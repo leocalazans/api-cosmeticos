@@ -6,13 +6,29 @@ const productRoutes = require('./routes/productRoutes');
 const ProductRepository = require('./repositories/ProductRepository');
 const ProductService = require('./services/ProductService');
 const seedProducts = require('./seed');  // Adicionar o seed
+const cors = require('@fastify/cors');
+const uri = "mongodb+srv://mrlewry:UGDcNuV365xysR7q@cluster0.egkpc.mongodb.net/cosmeticos?retryWrites=true&w=majority&appName=Cluster0";
 
 // Registre o plugin do MongoDB
 fastify.register(mongodb, {
   forceClose: true,
-  url: 'mongodb://localhost:27017/costmeticos'
+  url: uri
 });
 
+fastify.register(cors, {
+  origin: (origin, cb) => {
+    const whitelist = ['http://localhost:5173'];
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      cb(null, true);
+    } else {
+      cb(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['X-Total-Count'],
+  credentials: true,
+});
 
 // Registre o plugin Swagger para documentação
 fastify.register(swagger, {
@@ -32,7 +48,7 @@ fastify.register(swagger, {
 });
 
 fastify.register(fastifySwaggerUi, {
-  routePrefix: '/docs',  // Caminho onde você pode acessar o Swagger
+  routePrefix: '/docs',  
   uiConfig: {
     docExpansion: 'full',
     deepLinking: false
@@ -43,28 +59,25 @@ fastify.register(fastifySwaggerUi, {
 fastify.after(() => {
   const db = fastify.mongo.db;
   console.log(db)
-  console.log(process.env.MONGO_URL)
   
-  // Verifique se a conexão está disponível
   if (!db) {
+    fastify.log.error(fastify.mongo);
     fastify.log.error('Banco de dados MongoDB não está acessível.');
     process.exit(1);
   }
 
-  // Decore o serviço de produtos
   fastify.decorate('productService', new ProductService(new ProductRepository(db)));
 });
 
 fastify.register(productRoutes);
 
 
-// Inicialize o servidor
 const start = async () => {
   try {
     await fastify.listen({ port: 3000 });
     fastify.log.info(`Server running at http://localhost:3000`);
-    // await seedProducts(fastify.mongo.db);
-    fastify.swagger(); // Expor documentação do Swagger
+    await seedProducts(fastify.mongo.db);
+    fastify.swagger(); 
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
