@@ -49,7 +49,7 @@ A documentação da API, gerada via Swagger, pode ser acessada em:
 http://localhost:3000/docs
 
 ### API em python 
-Esta é a API inicial da loja **Cosméticos-co**, desenvolvida com **Node.js** para atender às funcionalidades básicas do sistema. Versão tenha sido utilizada para o **MVP (Minimum Viable Product)**, estando em transição para uma arquitetura mais escalável e robusta, baseada em **microserviços** com **Python** ,**SQL** e **FastAPI**.
+Esta é a API inicial da loja **Cosméticos-co**, desenvolvida com **Node.js** para atender às funcionalidades básicas do sistema. Versão é um **MVP (Minimum Viable Product)**, estando em construção uma api com uma arquitetura mais escalável e robusta, baseada em **microserviços** com **Python** ,**SQL** e **FastAPI**.
 
 https://github.com/leocalazans/cosmetics-microservices
 
